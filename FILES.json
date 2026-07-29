@@ -1,0 +1,482 @@
+[
+  {
+    "path": "AGENT_PROMPT.md",
+    "group": "package",
+    "label": "Agent 接入 prompt"
+  },
+  {
+    "path": "LICENSE",
+    "group": "package",
+    "label": "License"
+  },
+  {
+    "path": "README.md",
+    "group": "package",
+    "label": "README"
+  },
+  {
+    "path": "docs/configs.md",
+    "group": "docs",
+    "label": "configs"
+  },
+  {
+    "path": "docs/guide.md",
+    "group": "docs",
+    "label": "guide"
+  },
+  {
+    "path": "docs/index.md",
+    "group": "docs",
+    "label": "index"
+  },
+  {
+    "path": "docs/rules/index.md",
+    "group": "docs/rules",
+    "label": "index"
+  },
+  {
+    "path": "docs/rules/no-chinese-user-text-literal.md",
+    "group": "docs/rules",
+    "label": "no-chinese-user-text-literal"
+  },
+  {
+    "path": "docs/rules/no-component-name-conflict.md",
+    "group": "docs/rules",
+    "label": "no-component-name-conflict"
+  },
+  {
+    "path": "docs/rules/no-dom-query-in-component.md",
+    "group": "docs/rules",
+    "label": "no-dom-query-in-component"
+  },
+  {
+    "path": "docs/rules/no-dynamic-i18n-t-key.md",
+    "group": "docs/rules",
+    "label": "no-dynamic-i18n-t-key"
+  },
+  {
+    "path": "docs/rules/no-enum-prop-type.md",
+    "group": "docs/rules",
+    "label": "no-enum-prop-type"
+  },
+  {
+    "path": "docs/rules/no-explicit-vue-api-import.md",
+    "group": "docs/rules",
+    "label": "no-explicit-vue-api-import"
+  },
+  {
+    "path": "docs/rules/no-explicit-vue-component-import.md",
+    "group": "docs/rules",
+    "label": "no-explicit-vue-component-import"
+  },
+  {
+    "path": "docs/rules/no-extra-composable-exports.md",
+    "group": "docs/rules",
+    "label": "no-extra-composable-exports"
+  },
+  {
+    "path": "docs/rules/no-flat-private-child-module.md",
+    "group": "docs/rules",
+    "label": "no-flat-private-child-module"
+  },
+  {
+    "path": "docs/rules/no-global-composable-import-ui-layer.md",
+    "group": "docs/rules",
+    "label": "no-global-composable-import-ui-layer"
+  },
+  {
+    "path": "docs/rules/no-global-composable-pass-through.md",
+    "group": "docs/rules",
+    "label": "no-global-composable-pass-through"
+  },
+  {
+    "path": "docs/rules/no-i18n-t-fallback.md",
+    "group": "docs/rules",
+    "label": "no-i18n-t-fallback"
+  },
+  {
+    "path": "docs/rules/no-missing-static-asset-import.md",
+    "group": "docs/rules",
+    "label": "no-missing-static-asset-import"
+  },
+  {
+    "path": "docs/rules/no-native-string-user-text-ops.md",
+    "group": "docs/rules",
+    "label": "no-native-string-user-text-ops"
+  },
+  {
+    "path": "docs/rules/no-nested-define-props.md",
+    "group": "docs/rules",
+    "label": "no-nested-define-props"
+  },
+  {
+    "path": "docs/rules/no-nested-vue-context-composable.md",
+    "group": "docs/rules",
+    "label": "no-nested-vue-context-composable"
+  },
+  {
+    "path": "docs/rules/no-redundant-indexed-record-satisfies.md",
+    "group": "docs/rules",
+    "label": "no-redundant-indexed-record-satisfies"
+  },
+  {
+    "path": "docs/rules/no-redundant-watch-source-compare.md",
+    "group": "docs/rules",
+    "label": "no-redundant-watch-source-compare"
+  },
+  {
+    "path": "docs/rules/no-ssr-unsafe-module-state.md",
+    "group": "docs/rules",
+    "label": "no-ssr-unsafe-module-state"
+  },
+  {
+    "path": "docs/rules/no-static-px-inline-style.md",
+    "group": "docs/rules",
+    "label": "no-static-px-inline-style"
+  },
+  {
+    "path": "docs/rules/no-template-enum-member-alias.md",
+    "group": "docs/rules",
+    "label": "no-template-enum-member-alias"
+  },
+  {
+    "path": "docs/rules/no-type-import-used-as-value.md",
+    "group": "docs/rules",
+    "label": "no-type-import-used-as-value"
+  },
+  {
+    "path": "docs/rules/prefer-inline-single-use-map.md",
+    "group": "docs/rules",
+    "label": "prefer-inline-single-use-map"
+  },
+  {
+    "path": "docs/rules/prefer-inline-trivial-computed.md",
+    "group": "docs/rules",
+    "label": "prefer-inline-trivial-computed"
+  },
+  {
+    "path": "docs/rules/prefer-keyed-object-map.md",
+    "group": "docs/rules",
+    "label": "prefer-keyed-object-map"
+  },
+  {
+    "path": "docs/rules/prefer-load-more-trigger.md",
+    "group": "docs/rules",
+    "label": "prefer-load-more-trigger"
+  },
+  {
+    "path": "docs/rules/prefer-to-refs-props.md",
+    "group": "docs/rules",
+    "label": "prefer-to-refs-props"
+  },
+  {
+    "path": "src/configs.js",
+    "group": "plugin",
+    "label": "configs"
+  },
+  {
+    "path": "src/index.js",
+    "group": "plugin",
+    "label": "src"
+  },
+  {
+    "path": "src/rules/index.js",
+    "group": "rules",
+    "label": "src/rules"
+  },
+  {
+    "path": "src/rules/no-chinese-user-text-literal/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-chinese-user-text-literal/index.mjs",
+    "group": "rules",
+    "label": "no-chinese-user-text-literal"
+  },
+  {
+    "path": "src/rules/no-component-name-conflict/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-component-name-conflict/index.mjs",
+    "group": "rules",
+    "label": "no-component-name-conflict"
+  },
+  {
+    "path": "src/rules/no-dom-query-in-component/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-dom-query-in-component/index.mjs",
+    "group": "rules",
+    "label": "no-dom-query-in-component"
+  },
+  {
+    "path": "src/rules/no-dynamic-i18n-t-key/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-dynamic-i18n-t-key/index.mjs",
+    "group": "rules",
+    "label": "no-dynamic-i18n-t-key"
+  },
+  {
+    "path": "src/rules/no-enum-prop-type/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-enum-prop-type/index.mjs",
+    "group": "rules",
+    "label": "no-enum-prop-type"
+  },
+  {
+    "path": "src/rules/no-explicit-vue-api-import/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-explicit-vue-api-import/constants.js",
+    "group": "rules",
+    "label": "constants"
+  },
+  {
+    "path": "src/rules/no-explicit-vue-api-import/index.mjs",
+    "group": "rules",
+    "label": "no-explicit-vue-api-import"
+  },
+  {
+    "path": "src/rules/no-explicit-vue-component-import/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-explicit-vue-component-import/index.mjs",
+    "group": "rules",
+    "label": "no-explicit-vue-component-import"
+  },
+  {
+    "path": "src/rules/no-extra-composable-exports/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-extra-composable-exports/index.mjs",
+    "group": "rules",
+    "label": "no-extra-composable-exports"
+  },
+  {
+    "path": "src/rules/no-flat-private-child-module/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-flat-private-child-module/index.mjs",
+    "group": "rules",
+    "label": "no-flat-private-child-module"
+  },
+  {
+    "path": "src/rules/no-global-composable-import-ui-layer/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-global-composable-import-ui-layer/index.mjs",
+    "group": "rules",
+    "label": "no-global-composable-import-ui-layer"
+  },
+  {
+    "path": "src/rules/no-global-composable-pass-through/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-global-composable-pass-through/index.mjs",
+    "group": "rules",
+    "label": "no-global-composable-pass-through"
+  },
+  {
+    "path": "src/rules/no-i18n-t-fallback/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-i18n-t-fallback/index.mjs",
+    "group": "rules",
+    "label": "no-i18n-t-fallback"
+  },
+  {
+    "path": "src/rules/no-missing-static-asset-import/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-missing-static-asset-import/index.mjs",
+    "group": "rules",
+    "label": "no-missing-static-asset-import"
+  },
+  {
+    "path": "src/rules/no-native-string-user-text-ops/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-native-string-user-text-ops/constants.js",
+    "group": "rules",
+    "label": "constants"
+  },
+  {
+    "path": "src/rules/no-native-string-user-text-ops/index.mjs",
+    "group": "rules",
+    "label": "no-native-string-user-text-ops"
+  },
+  {
+    "path": "src/rules/no-nested-define-props/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-nested-define-props/index.mjs",
+    "group": "rules",
+    "label": "no-nested-define-props"
+  },
+  {
+    "path": "src/rules/no-nested-vue-context-composable/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-nested-vue-context-composable/index.mjs",
+    "group": "rules",
+    "label": "no-nested-vue-context-composable"
+  },
+  {
+    "path": "src/rules/no-redundant-indexed-record-satisfies/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-redundant-indexed-record-satisfies/index.mjs",
+    "group": "rules",
+    "label": "no-redundant-indexed-record-satisfies"
+  },
+  {
+    "path": "src/rules/no-redundant-watch-source-compare/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-redundant-watch-source-compare/index.mjs",
+    "group": "rules",
+    "label": "no-redundant-watch-source-compare"
+  },
+  {
+    "path": "src/rules/no-ssr-unsafe-module-state/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-ssr-unsafe-module-state/index.mjs",
+    "group": "rules",
+    "label": "no-ssr-unsafe-module-state"
+  },
+  {
+    "path": "src/rules/no-static-px-inline-style/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-static-px-inline-style/index.mjs",
+    "group": "rules",
+    "label": "no-static-px-inline-style"
+  },
+  {
+    "path": "src/rules/no-template-enum-member-alias/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-template-enum-member-alias/index.mjs",
+    "group": "rules",
+    "label": "no-template-enum-member-alias"
+  },
+  {
+    "path": "src/rules/no-type-import-used-as-value/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/no-type-import-used-as-value/index.mjs",
+    "group": "rules",
+    "label": "no-type-import-used-as-value"
+  },
+  {
+    "path": "src/rules/prefer-inline-single-use-map/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/prefer-inline-single-use-map/index.mjs",
+    "group": "rules",
+    "label": "prefer-inline-single-use-map"
+  },
+  {
+    "path": "src/rules/prefer-inline-trivial-computed/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/prefer-inline-trivial-computed/index.mjs",
+    "group": "rules",
+    "label": "prefer-inline-trivial-computed"
+  },
+  {
+    "path": "src/rules/prefer-keyed-object-map/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/prefer-keyed-object-map/index.mjs",
+    "group": "rules",
+    "label": "prefer-keyed-object-map"
+  },
+  {
+    "path": "src/rules/prefer-load-more-trigger/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/prefer-load-more-trigger/index.mjs",
+    "group": "rules",
+    "label": "prefer-load-more-trigger"
+  },
+  {
+    "path": "src/rules/prefer-to-refs-props/README.md",
+    "group": "rules",
+    "label": "README"
+  },
+  {
+    "path": "src/rules/prefer-to-refs-props/index.mjs",
+    "group": "rules",
+    "label": "prefer-to-refs-props"
+  },
+  {
+    "path": "src/rules/utils/eslint-rule-context.mjs",
+    "group": "rules",
+    "label": "eslint-rule-context"
+  },
+  {
+    "path": "src/rules/utils/i18n-call.mjs",
+    "group": "rules",
+    "label": "i18n-call"
+  },
+  {
+    "path": "src/rules/utils/nuxt-component-name.mjs",
+    "group": "rules",
+    "label": "nuxt-component-name"
+  }
+]
