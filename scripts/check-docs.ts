@@ -2,7 +2,7 @@ import { readFile, readdir, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { rules } from '../src/rules/index.js'
-import { ruleGroups } from '../src/rules/groups.js'
+import { ruleGroupDetails, ruleGroups } from '../src/rules/groups.js'
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const docsRulesRoot = path.join(packageRoot, 'docs/rules')
@@ -27,6 +27,14 @@ function fail(message: string): never {
 
 const ruleNames = Object.keys(rules).sort()
 const configuredRules = getConfiguredRules()
+
+for (const [groupName, details] of Object.entries(ruleGroupDetails)) {
+  for (const [fieldName, value] of Object.entries(details)) {
+    if (typeof value === 'string' && /[<>]/.test(value)) {
+      fail(`规则分组 ${groupName}.${fieldName} 包含裸尖括号，VitePress sidebar SSR 可能把它当成 HTML 标签。`)
+    }
+  }
+}
 
 for (const ruleName of ruleNames) {
   if (!configuredRules.has(ruleName)) {

@@ -52,8 +52,8 @@ export const ruleGroups = {
 
 export const ruleGroupDetails = {
   'vue-script-setup': {
-    label: 'Vue <script setup>',
-    summary: 'Vue <script setup> 宏和模板名称解析边界。',
+    label: 'Vue script setup',
+    summary: 'Vue script setup 宏和模板名称解析边界。',
   },
   i18n: {
     label: 'i18n',
