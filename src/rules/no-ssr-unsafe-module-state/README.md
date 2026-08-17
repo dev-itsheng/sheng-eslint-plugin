@@ -4,4 +4,4 @@
 
 完整规则文档见 `../../../docs/rules/no-ssr-unsafe-module-state.md`。
 
-内置 config：`nuxt-client-only-source`。
+内置 config：`nuxt-ssr-state`。

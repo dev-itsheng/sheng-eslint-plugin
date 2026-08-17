@@ -1,7 +1,7 @@
 ---
 ruleId: "@sheng/no-redundant-watch-source-compare"
 ruleName: "no-redundant-watch-source-compare"
-config: "project-style"
+config: "vue-reactivity"
 ---
 
 # @sheng/no-redundant-watch-source-compare
@@ -10,7 +10,7 @@ config: "project-style"
 
 ## 所属 config
 
-- `project-style`：项目风格、i18n、静态资源和类型可读性约定。
+- `vue-reactivity`：Vue watch、props 读取形态这类响应式代码约定。
 
 ## 背景
 
@@ -83,6 +83,14 @@ if (next === previous || loading.value) return
 ## 对应测试
 
 测试文件是 `tests/unit/architecture/no-redundant-watch-source-compare-rule.test.ts`。新增 AST 支持范围时，先补 valid / invalid case 再改规则。
+
+## 相关阅读
+
+这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：单 source `watch` 已经在值变化后触发，回调开头再写 `next === previous` 早退通常只是防御式噪音；真正应该保留的是 tab、请求状态、cursor 这类业务条件。
+
+## 在线试一下
+
+<RuleDemo rule="no-redundant-watch-source-compare" />
 
 ## 接入方式
 

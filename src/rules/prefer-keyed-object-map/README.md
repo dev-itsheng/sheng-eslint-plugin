@@ -4,4 +4,4 @@
 
 完整规则文档见 `../../../docs/rules/prefer-keyed-object-map.md`。
 
-内置 config：`project-style`。
+内置 config：`type-readability`。

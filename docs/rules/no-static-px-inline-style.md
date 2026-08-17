@@ -1,7 +1,7 @@
 ---
 ruleId: "@sheng/no-static-px-inline-style"
 ruleName: "no-static-px-inline-style"
-config: "project-style"
+config: "component-resource-style"
 ---
 
 # @sheng/no-static-px-inline-style
@@ -10,13 +10,13 @@ config: "project-style"
 
 ## 所属 config
 
-- `project-style`：项目风格、i18n、静态资源和类型可读性约定。
+- `component-resource-style`：组件 DOM owner、静态样式和静态资源 import 的项目约定。
 
 提示 Vue 组件不要把固定 `px` 样式写成 `:style` 绑定对象。
 
 固定尺寸优先放在组件 class / BEM 选择器里，并尽量用项目已有的 CSS 工具表达，例如 TailwindCSS `@apply`、CSS Modules 或 scoped style。脚本里的 style object 应只保留真实动态值。需要运行期变量时，优先使用 CSS 变量或 CSS `v-bind()`，不要把一组固定 `height / padding / gap / borderRadius` 长期留在 JS。
 
-当前规则先作为候选规则和单测样例保留，暂不接入默认 ESLint 配置。
+固定 `px` style object 看起来只是写法差异，实际会把静态视觉约束藏进脚本层。后续改样式、做响应式、统一 BEM 或迁移 CSS 工具时，维护者很难从样式文件里看到完整视觉规则。
 
 ## 会提示
 
@@ -54,6 +54,20 @@ const buttonStyle = {
   <div :style="{ '--avatar-color': color }" />
 </template>
 ```
+
+运行时变量生成的尺寸也可以继续通过 CSS 变量或 `v-bind()` 传给样式层。规则要挡的是“长期固定不变的视觉值”，不是阻止所有动态样式。
+
+## 例外处理
+
+第三方 SDK 容器、外部宿主限制、临时兼容层可能确实只能通过行内样式写固定值。建议通过 `ignoredPathPatterns` 精确放行这些路径，不要把例外写进规则源码。
+
+## 相关阅读
+
+这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：固定尺寸长期放在 JS style object 里，会把静态视觉约束藏进脚本层；固定值应该回到 class、BEM、scoped style 或 Tailwind `@apply`，脚本里的 `:style` 只保留真实动态值。
+
+## 在线试一下
+
+<RuleDemo rule="no-static-px-inline-style" />
 
 ## 接入方式
 

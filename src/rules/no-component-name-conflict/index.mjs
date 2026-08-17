@@ -9,6 +9,24 @@ const BUILT_IN_TAG_NAMES = new Set([
   'transition-group',
 ])
 
+const BUILT_IN_DIRECTIVE_NAMES = new Set([
+  'bind',
+  'cloak',
+  'else',
+  'else-if',
+  'for',
+  'html',
+  'if',
+  'memo',
+  'model',
+  'on',
+  'once',
+  'pre',
+  'show',
+  'slot',
+  'text',
+])
+
 const HTML_TAG_NAMES = new Set([
   'a',
   'abbr',
@@ -192,6 +210,12 @@ function getRawTemplateTagName(node) {
   return node.rawName || node.name || ''
 }
 
+function getDirectiveName(attribute) {
+  if (!attribute?.directive) return null
+
+  return attribute.key?.name?.name ?? null
+}
+
 function shouldInspectTemplateTag(rawName) {
   if (!rawName) return false
   if (rawName.includes('.')) return false
@@ -200,6 +224,13 @@ function shouldInspectTemplateTag(rawName) {
   if (BUILT_IN_TAG_NAMES.has(lowerName) || HTML_TAG_NAMES.has(lowerName)) return false
 
   return rawName.includes('-') || /^[a-z]/.test(rawName)
+}
+
+function shouldInspectDirectiveName(rawName) {
+  if (!rawName) return false
+  if (BUILT_IN_DIRECTIVE_NAMES.has(rawName)) return false
+
+  return true
 }
 
 function getConflictForTag(rawName, importedComponents, ordinaryBindings) {
@@ -218,15 +249,36 @@ function getConflictForTag(rawName, importedComponents, ordinaryBindings) {
   }
 }
 
+function getConflictForDirective(rawName, setupBindings) {
+  if (!shouldInspectDirectiveName(rawName)) return null
+
+  const candidateBaseName = `v-${rawName}`
+  const camelName = camelize(candidateBaseName)
+  const pascalName = capitalize(camelName)
+  const candidateNames = [candidateBaseName, camelName, pascalName].filter(
+    (name, index, names) => names.indexOf(name) === index,
+  )
+  const bindingNames = candidateNames.filter((name) => setupBindings.has(name))
+
+  if (bindingNames.length <= 1) return null
+
+  return {
+    bindingNames: bindingNames.map((name) => `"${name}"`).join(', '),
+    directiveName: `v-${rawName}`,
+  }
+}
+
 export default {
   meta: {
     type: 'problem',
     docs: {
-      description: '避免 Vue <script setup> 中组件 import 和普通顶层绑定只靠大小写区分，导致 kebab-case 组件 tag 被解析到普通绑定。',
+      description: '避免 Vue <script setup> 中组件 tag 或自定义指令名和顶层绑定发生大小写归一化冲突。',
     },
     messages: {
       componentNameConflict:
         '<{{tagName}}> 会先解析到普通绑定 {{localName}}，真正的组件 {{componentName}} 可能不会渲染；请把状态变量改成更具体的名字，或把组件 tag 写成 <{{componentName}} /> / 给组件 import 起别名。',
+      directiveNameConflict:
+        '自定义指令 {{directiveName}} 会同时匹配 <script setup> 里的 {{bindingNames}}；请重命名其中一个绑定，让指令名只对应一个 vXxx 变量。',
     },
     schema: [],
   },
@@ -236,8 +288,15 @@ export default {
 
     const importedComponents = new Set()
     const ordinaryBindings = new Set()
+    const setupBindings = new Set()
     const pendingTemplateTags = []
+    const pendingTemplateDirectives = []
     const reportedNodes = new WeakSet()
+
+    function addSetupBinding(name) {
+      if (!name) return
+      setupBindings.add(name)
+    }
 
     function reportTemplateTag(node, rawName) {
       if (reportedNodes.has(node)) return
@@ -253,10 +312,25 @@ export default {
       })
     }
 
+    function reportTemplateDirective(node, rawName) {
+      if (reportedNodes.has(node)) return
+
+      const conflict = getConflictForDirective(rawName, setupBindings)
+      if (!conflict) return
+
+      reportedNodes.add(node)
+      context.report({
+        node,
+        messageId: 'directiveNameConflict',
+        data: conflict,
+      })
+    }
+
     const scriptVisitor = {
       ImportDeclaration(node) {
         for (const specifier of node.specifiers) {
           if (isTypeOnlyImport(node, specifier)) continue
+          addSetupBinding(specifier.local?.name)
           if (specifier.type === 'ImportNamespaceSpecifier') continue
           if (!specifier.local?.name || !isPascalCase(specifier.local.name)) continue
 
@@ -266,18 +340,24 @@ export default {
       VariableDeclarator(node) {
         if (!isTopLevelVariableDeclarator(node)) return
         collectPatternIdentifiers(node.id, ordinaryBindings)
+        collectPatternIdentifiers(node.id, setupBindings)
       },
       FunctionDeclaration(node) {
         if (!isTopLevelDeclaration(node) || !node.id?.name) return
         ordinaryBindings.add(node.id.name)
+        setupBindings.add(node.id.name)
       },
       ClassDeclaration(node) {
         if (!isTopLevelDeclaration(node) || !node.id?.name) return
         ordinaryBindings.add(node.id.name)
+        setupBindings.add(node.id.name)
       },
       'Program:exit'() {
         for (const { node, rawName } of pendingTemplateTags) {
           reportTemplateTag(node, rawName)
+        }
+        for (const { node, rawName } of pendingTemplateDirectives) {
+          reportTemplateDirective(node, rawName)
         }
       },
     }
@@ -287,6 +367,14 @@ export default {
         const rawName = getRawTemplateTagName(node)
         pendingTemplateTags.push({ node, rawName })
         reportTemplateTag(node, rawName)
+
+        for (const attribute of node.startTag?.attributes ?? []) {
+          const directiveName = getDirectiveName(attribute)
+          if (!directiveName) continue
+
+          pendingTemplateDirectives.push({ node: attribute, rawName: directiveName })
+          reportTemplateDirective(attribute, directiveName)
+        }
       },
     }
 

@@ -1,7 +1,7 @@
 ---
 ruleId: "@sheng/no-redundant-indexed-record-satisfies"
 ruleName: "no-redundant-indexed-record-satisfies"
-config: "project-style"
+config: "type-readability"
 ---
 
 # @sheng/no-redundant-indexed-record-satisfies
@@ -10,9 +10,11 @@ config: "project-style"
 
 ## 所属 config
 
-- `project-style`：项目风格、i18n、静态资源和类型可读性约定。
+- `type-readability`：TypeScript 运行时值、映射表和轻量 computed 的可读性约定。
 
 完整对象字面量映射表如果创建后马上用 `[key]` 读取，不需要再套 `satisfies Record<...>`。这种写法会让简单的 key/value 映射变得更绕，也容易让读者误以为这里必须依赖额外的类型拓宽。
+
+这个规则处理的是“立即索引”的场景。对象字面量刚写完就被 `[activeKey]` 读取，读者关心的是这一次映射结果，而不是拿到一张可复用的完整表。多套类型标注叠在一起，通常只会让简单表达式显得更重。
 
 ## 会提示
 
@@ -47,6 +49,18 @@ const value = (
 ```
 
 `Record<string, ...>` 这类开放 key 也不提示，因为去掉 `satisfies` 后可能失去索引签名。
+
+## 不自动修复
+
+规则暂时不提供 autofix。`satisfies` 附近可能有注释、格式化意图或类型推断边界，自动删除容易让 diff 难读。命中后建议人工确认这张表确实只是立即索引，再去掉冗余标注。
+
+## 相关阅读
+
+这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：完整 `Record` 映射表如果创建后马上索引读取，再套一层 `satisfies Record<...>` 往往只是在增加类型噪音；这类规则也不适合第一版就做 autofix。
+
+## 在线试一下
+
+<RuleDemo rule="no-redundant-indexed-record-satisfies" />
 
 ## 接入方式
 

@@ -4,4 +4,4 @@
 
 完整规则文档见 `../../../docs/rules/no-redundant-indexed-record-satisfies.md`。
 
-内置 config：`project-style`。
+内置 config：`type-readability`。

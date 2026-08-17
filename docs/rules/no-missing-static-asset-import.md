@@ -1,7 +1,7 @@
 ---
 ruleId: "@sheng/no-missing-static-asset-import"
 ruleName: "no-missing-static-asset-import"
-config: "project-style"
+config: "component-resource-style"
 ---
 
 # @sheng/no-missing-static-asset-import
@@ -10,13 +10,33 @@ config: "project-style"
 
 ## 所属 config
 
-- `project-style`：项目风格、i18n、静态资源和类型可读性约定。
+- `component-resource-style`：组件 DOM owner、静态样式和静态资源 import 的项目约定。
 
 ## 背景
 
 前端项目通常会给 `*.png`、`*.svg`、`*.webp` 这类静态资源补 TypeScript module declaration。这样写组件时可以正常 `import icon from './icon.svg'`，但类型兜底只能说明“这种后缀可以被 import”，不能证明路径上的文件真实存在。
 
 路径写错后，TypeScript 可能仍然安静，真正报错会拖到 Vite dev、Nuxt build 或线上资源加载阶段。这条规则把检查提前到 ESLint：只要 import source 是静态资源后缀，就按当前文件路径或配置的 alias target 去检查文件是否存在。
+
+这条规则适合在业务项目里升成 `error`。资源文件不存在属于确定会坏的问题，继续用 `warn` 只是在等构建或运行时用更晚、更吵的方式报出来。
+
+## 会提示
+
+如果当前文件旁边没有 `assets/empty.svg`，或者 `@/assets/success.mp3` 对应 alias 目录下没有真实文件，规则会提示：
+
+```ts
+import emptyIcon from './assets/empty.svg'
+import successAudio from '@/assets/success.mp3'
+```
+
+## 推荐处理
+
+把 import 指向真实存在的资源，或者先把缺失资源补进对应目录：
+
+```ts
+import emptyIcon from './assets/empty-state.svg'
+import successAudio from '@/assets/audio/success.mp3'
+```
 
 ## 检查范围
 
@@ -59,6 +79,18 @@ config: "project-style"
 - 需要 loader / query 额外生成的虚拟资源
 
 这些场景要靠构建、运行时测试或更贴近项目的专项脚本验证。
+
+## 和 TypeScript module declaration 的关系
+
+`declare module '*.svg'` 只能让 TypeScript 接受这种 import 形态，它不会去磁盘上确认 `./assets/empty.svg` 是否真实存在。这条规则补的是“路径存在性”检查，不替代资源 loader、图片优化、public 路径约定或运行时 CDN 校验。
+
+## 相关阅读
+
+这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：`declare module '*.svg'` 只能说明这种 import 形态在类型上可接受，不能证明文件存在；资源路径不存在属于确定会坏的问题，适合在项目里升成 `error`。
+
+## 在线试一下
+
+<RuleDemo rule="no-missing-static-asset-import" />
 
 ## 接入方式
 

@@ -1,7 +1,8 @@
 import { readFile, readdir, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { ruleGroups, rules } from '../src/rules/index.js'
+import { rules } from '../src/rules/index.js'
+import { ruleGroups } from '../src/rules/groups.js'
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const docsRulesRoot = path.join(packageRoot, 'docs/rules')

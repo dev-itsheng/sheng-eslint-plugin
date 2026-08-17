@@ -46,6 +46,10 @@ defineProps<{
 </script>
 ```
 
+## 相关阅读
+
+这条规则对应中文文章 [用 const enum 和字符串值类型保留公开 API 的自然写法](https://shengsheng.fun/2026/07/14/const-enum-string-value-type/)。文章里的核心判断是：公开 Vue prop 常常应该保留 `mode="prompt"` 这样的字符串调用面；内部可以用 `const enum` 提供命名锚点，再用 `` `${Enum}` `` 得到字符串值类型。规则只提醒显式配置的公开 enum，不把“所有 enum prop 都不行”当成全仓口味。
+
 ## 接入方式
 
 `@sheng/eslint-plugin` 的内置 config 会以 `warn` 开启这条规则。需要单独配置时，可以这样写：

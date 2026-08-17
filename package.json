@@ -10,7 +10,7 @@
   },
   "files": [
     "src",
-    "docs",
+    "docs/**/*.md",
     "README.md",
     "AGENT_PROMPT.md",
     "FILES.json",
@@ -18,6 +18,9 @@
   ],
   "scripts": {
     "test": "vitest run && pnpm run docs:check",
+    "docs:dev": "vitepress dev docs --host 127.0.0.1",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs --host 127.0.0.1",
     "docs:check": "tsx scripts/check-docs.ts",
     "files:index": "tsx scripts/generate-files-index.ts",
     "sync:blog": "tsx scripts/sync-blog-kits.ts",
@@ -59,7 +62,9 @@
     "@typescript-eslint/parser": "^8.65.0",
     "@vue/compiler-sfc": "^3.5.40",
     "eslint": "^10.7.0",
+    "monaco-editor": "^0.56.0",
     "tsx": "^4.22.3",
+    "vitepress": "^1.6.4",
     "vitest": "^4.1.10",
     "vue-eslint-parser": "^10.4.1"
   }

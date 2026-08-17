@@ -27,6 +27,30 @@ config: "nuxt-auto-import"
 - `app/pages/**` 里，import `app/components/**` 下的 `.vue` 会提示。
 - 支持 `ignoredPathPatterns`，用于先放过不属于当前 owner 的历史模块或迁移中的旧目录。
 
+## 会提示
+
+```vue
+<script setup lang="ts">
+import RecordRow from './RecordRow.vue'
+</script>
+
+<template>
+  <RecordRow />
+</template>
+```
+
+页面里显式 import `app/components` 下的组件也会提示：
+
+```vue
+<script setup lang="ts">
+import FeedSection from '~/components/home/FeedSection/index.vue'
+</script>
+
+<template>
+  <FeedSection />
+</template>
+```
+
 ## 推荐写法
 
 ```vue
@@ -38,6 +62,12 @@ config: "nuxt-auto-import"
   <CommonUserProfileCard />
 </template>
 ```
+
+组件名要以 Nuxt 真实生成结果为准。路径里重复片段会被 Nuxt 移除，例如 `app/components/common/User/Profile/Record/RecordRow.vue` 对应 `<CommonUserProfileRecordRow />`，不是 `<CommonUserProfileRecordRecordRow />`。
+
+## 相关阅读
+
+这条规则对应中文文章 [Nuxt 自动导入不该靠自觉：一次组件和 Vue API import 的 ESLint 护栏](https://shengsheng.fun/2026/07/09/nuxt-auto-import-eslint-guardrail/)。文章里的核心结论是：规则只抓 `app/components` 和 `app/pages` 里能明确交给 Nuxt 自动导入的 `.vue` import；提示里的组件名必须贴着 Nuxt 真实推导算法，不按路径硬拼。
 
 ## 接入方式
 

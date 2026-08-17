@@ -1,7 +1,7 @@
 ---
 ruleId: "@sheng/no-dynamic-i18n-t-key"
 ruleName: "no-dynamic-i18n-t-key"
-config: "project-style"
+config: "i18n"
 ---
 
 # @sheng/no-dynamic-i18n-t-key
@@ -10,9 +10,11 @@ config: "project-style"
 
 ## 所属 config
 
-- `project-style`：项目风格、i18n、静态资源和类型可读性约定。
+- `i18n`：翻译 key、调用点 fallback 和用户可见中文文案约定。
 
 `t()` / `$t()` 的第一个参数如果是动态表达式，IDE 插件、静态扫描和翻译平台都看不到真实 key。缺失文案、拼错 key 和未翻译内容会被推迟到运行时才暴露。
+
+这条规则不反对“根据状态切换文案”，它只要求每个候选 key 都能静态出现在代码里。显式分支看起来比模板字符串啰嗦一点，但 i18n key 会继续被补全、跳转、扫描和缺失检查识别。
 
 ## 会提示
 
@@ -34,9 +36,21 @@ const title = computed(() => {
 
 每个 key 都紧贴 `t()`，工具链才能扫描、补全和跳转。需要根据状态切换文案时，显式列出分支比拼接 key 更容易维护。
 
+## 不处理的场景
+
+这条规则只检查翻译函数第一个参数的静态形态，不判断 key 是否真实存在，也不负责补齐语言包。缺失 key、未翻译文案和多语言同步仍然应该交给 i18n 平台、字典扫描或项目自己的语言包校验。
+
 ## 配置
 
 默认检查 `t()` 和 `$t()`，也能追踪 `useAppI18n()` 解构出的别名。项目里有其他翻译函数时，通过 `functionNames` 补充。
+
+## 相关阅读
+
+这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：动态 key 看起来灵活，但 IDE 插件、静态扫描和翻译平台都看不到真实 key；需要根据状态切换文案时，显式分支比拼接 key 更容易维护。
+
+## 在线试一下
+
+<RuleDemo rule="no-dynamic-i18n-t-key" />
 
 ## 接入方式
 

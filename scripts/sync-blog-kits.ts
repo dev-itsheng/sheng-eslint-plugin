@@ -1,7 +1,7 @@
 import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { ruleGroups } from '../src/rules/index.js'
+import { ruleGroups } from '../src/rules/groups.js'
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const blogRoot = path.resolve(packageRoot, '../sheng-blog')

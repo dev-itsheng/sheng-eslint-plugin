@@ -16,7 +16,7 @@
 - Code Lab 需要浏览器可运行的快照，npm 包又需要 Node / ESLint 环境，两边约束不同。
 - 用户如果只想安装规则，不应该先理解整套博客资源目录。
 
-这个包把 ESLint rule 本身变成主来源。完整规则文档放在 `docs/rules/`，以后可以直接生成文档站；博客源码包继续保留，但它们变成从本包同步出去的文章快照。读者可以安装 npm 包，也可以继续按 `FILES.json` 复制源码。
+这个包把 ESLint rule 本身变成主来源。完整规则文档放在 `docs/rules/`，并通过 VitePress 发布到 GitHub Pages；博客源码包继续保留，但它们变成从本包同步出去的文章快照。读者可以安装 npm 包，也可以继续按 `FILES.json` 复制源码。
 
 ## 方案
 
@@ -80,7 +80,8 @@ Node 版本要求跟随当前 ESLint 10 生态：
 import sheng from '@sheng/eslint-plugin'
 
 export default [
-  sheng.configs['project-style'],
+  sheng.configs.i18n,
+  sheng.configs['component-resource-style'],
   sheng.configs['composable-boundary'],
   {
     rules: {
@@ -131,90 +132,118 @@ export default [
 ]
 ```
 
-## Configs
+## 配置
 
-| Config | 规则数 | 适合先接入的项目 |
+| 配置 | 规则数 | 适合先接入的项目 |
 | --- | ---: | --- |
 | `all` | 27 | 想完整试跑所有规则的项目。建议只用于本地试验或 CI 观察期。 |
-| `vue-script-setup` | 2 | 使用 Vue `<script setup>`，并且遇到过宏调用位置、组件命名冲突的项目。 |
+| `vue-script-setup` | 2 | 使用 Vue `<script setup>`，并且遇到过宏调用位置、模板名称解析冲突的项目。 |
+| `i18n` | 3 | 使用翻译 key、语言包和用户可见文案清单的国际化项目。 |
 | `unicode-user-text` | 1 | 需要正确统计或截断用户可见文本的产品。 |
 | `nuxt-auto-import` | 2 | 使用 Nuxt 自动导入组件和 Vue API 的项目。 |
 | `enum-public-api` | 2 | 需要保留字符串兼容公开 API，同时内部希望使用 enum 的 Vue / TypeScript 项目。 |
-| `nuxt-client-only-source` | 1 | Nuxt 项目里有 `use*` composable，并且需要明确 SSR 下模块级状态边界。 |
+| `nuxt-ssr-state` | 1 | Nuxt 项目里有 `use*` composable，并且需要明确 SSR 下模块级状态边界。 |
 | `composable-boundary` | 5 | 已经形成 composable 分层，想守住公开面、私有模块和 UI 层依赖方向的项目。 |
-| `project-style` | 13 | 想把项目风格、i18n、静态资源和类型可读性约定写进 ESLint 的项目。 |
+| `component-resource-style` | 3 | 想把组件 DOM owner、静态样式和静态资源 import 约定写进 ESLint 的项目。 |
+| `vue-reactivity` | 2 | 想统一 Vue watch 和 props 读取形态的项目。 |
+| `type-readability` | 5 | 想减少 TypeScript 映射表、type import 和轻量 computed 噪音的项目。 |
 | `load-more-trigger` | 1 | 有统一 `useLoadMoreTrigger` 或类似无限滚动触底触发器的项目。 |
 
 这些 config 都是普通 flat config 片段，可以和项目已有配置自由组合。它们只注册 `@sheng` 插件并打开规则，不设置 parser、globals、ignores 或 formatter。
 
-## Rules
+`project-style` 和 `nuxt-client-only-source` 仍保留为兼容别名。新项目优先使用细分 config：不涉及 i18n 的项目可以不接 `i18n`，只需要资源路径检查时也可以单独接 `component-resource-style`。
+
+## 文档站部署
+
+文档站用 VitePress 构建，GitHub Pages 地址是 `https://dev-itsheng.github.io/sheng-eslint-plugin/`。当前仓库是普通 project page，所以 `docs/.vitepress/config.ts` 里的 `base` 必须保持为 `/sheng-eslint-plugin/`。
+
+部署由 `.github/workflows/docs.yml` 负责：推送到 `main` 或手动触发 workflow 时，先安装依赖、跑 `docs:check`，再执行 `pnpm run docs:build`，最后把 `docs/.vitepress/dist` 作为 GitHub Pages artifact 发布。
+
+仓库第一次启用 Pages 时，还需要在 GitHub 仓库的 `Settings -> Pages -> Build and deployment -> Source` 里选择 `GitHub Actions`。这个设置不能靠仓库文件自动完成；设置好以后，推送 `main` 等 workflow 完成即可访问文档站。
+
+## 规则
 
 规则按内置 config 分组列出。每条规则的细节、反例、正例和选项以 `docs/rules/<rule-name>.md` 为准；这里先给接入者一个扫读入口，帮助判断哪些规则适合当前项目。
 
 ### `vue-script-setup`
 
-| Rule | 作用 |
+| 规则 | 作用 |
 | --- | --- |
 | `@sheng/no-nested-define-props` | 避免把 Vue `<script setup>` 的 `defineProps()` 包进普通运行时表达式，导致编译器宏没有被识别。 |
-| `@sheng/no-component-name-conflict` | 避免组件 import 和普通顶层绑定只靠大小写区分，导致 kebab-case 组件 tag 被解析到普通绑定。 |
+| `@sheng/no-component-name-conflict` | 避免组件 tag 或自定义指令名和顶层绑定只靠大小写区分，导致模板解析到错误对象。 |
+
+### `i18n`
+
+| 规则 | 作用 |
+| --- | --- |
+| `@sheng/no-dynamic-i18n-t-key` | 要求 i18n 的 `t()` 第一个参数必须是字符串字面量，保证 IDE 插件和静态扫描能识别真实 key。 |
+| `@sheng/no-i18n-t-fallback` | 禁止在 i18n 翻译函数调用里传 fallback，避免缺失 key 被调用点静默掩盖。 |
+| `@sheng/no-chinese-user-text-literal` | 扫描运行时代码里的中文字面量；用户可见中文应使用已有 i18n key，待补文案进入项目文案清单。 |
 
 ### `unicode-user-text`
 
-| Rule | 作用 |
+| 规则 | 作用 |
 | --- | --- |
 | `@sheng/no-native-string-user-text-ops` | 禁止在用户可见文本里直接使用原生字符串长度或截断 API，避免 UTF-16 code unit 计数和切片误伤 emoji、国旗和组合字符。 |
 
 ### `nuxt-auto-import`
 
-| Rule | 作用 |
+| 规则 | 作用 |
 | --- | --- |
 | `@sheng/no-explicit-vue-api-import` | 提示 Vue 运行时 API 在 Nuxt SFC / app 代码里应使用自动导入，类型 import 仍允许显式保留。 |
 | `@sheng/no-explicit-vue-component-import` | 提示 Nuxt 组件应使用自动导入名，避免在组件和页面里显式 import `.vue` 组件。 |
 
 ### `enum-public-api`
 
-| Rule | 作用 |
+| 规则 | 作用 |
 | --- | --- |
 | `@sheng/no-enum-prop-type` | 提醒少数需要 string-compatible 调用面的 Vue props 不要直接暴露指定 enum 类型。 |
 | `@sheng/no-template-enum-member-alias` | 提示 Vue template 可以直接使用 `<script setup>` 里的 enum member，不需要额外声明一比一中转常量。 |
 
-### `nuxt-client-only-source`
+### `nuxt-ssr-state`
 
-| Rule | 作用 |
+| 规则 | 作用 |
 | --- | --- |
 | `@sheng/no-ssr-unsafe-module-state` | 提醒 Nuxt `use*` composable 里的模块级可变状态必须显式声明 SSR 策略。 |
 
 ### `composable-boundary`
 
-| Rule | 作用 |
+| 规则 | 作用 |
 | --- | --- |
 | `@sheng/no-extra-composable-exports` | `use*.ts` composable 文件只允许默认导出主 composable。 |
-| `@sheng/no-flat-private-child-module` | 提示只有单一父调用方的私有 composable / component 不要和父文件平铺在同一个目录。 |
+| `@sheng/no-flat-private-child-module` | 提示只有单一父调用方的私有 composable 或 component 不要和父文件平铺在同一个目录。 |
 | `@sheng/no-global-composable-import-ui-layer` | 禁止全局 composable 反向 import UI 层。 |
 | `@sheng/no-global-composable-pass-through` | 提醒不要把全局 composable 返回值原样透传给组件或页面私有 composable。 |
 | `@sheng/no-nested-vue-context-composable` | 限制依赖当前 Vue / Nuxt 上下文的 API 只能在 setup 或 `use*.ts` composable 主函数顶层同步调用。 |
 
-### `project-style`
+### `component-resource-style`
 
-| Rule | 作用 |
+| 规则 | 作用 |
 | --- | --- |
-| `@sheng/no-chinese-user-text-literal` | 扫描运行时代码里的中文字面量；用户可见中文应使用已有 i18n key，待补文案进入项目文案清单。 |
 | `@sheng/no-dom-query-in-component` | 提示组件和页面不要用 DOM 查找 API，优先使用 template ref 或 function ref。 |
-| `@sheng/no-dynamic-i18n-t-key` | 要求 i18n 的 `t()` 第一个参数必须是字符串字面量，保证 IDE 插件和静态扫描能识别真实 key。 |
-| `@sheng/no-i18n-t-fallback` | 禁止在 i18n 翻译函数调用里传 fallback，避免缺失 key 被调用点静默掩盖。 |
 | `@sheng/no-missing-static-asset-import` | 检查静态资源 import 的目标文件是否真实存在，避免 dev / build 阶段才暴露缺文件。 |
-| `@sheng/no-redundant-indexed-record-satisfies` | 提示完整 `Record` 映射表被立即索引时去掉冗余 `satisfies`。 |
-| `@sheng/no-redundant-watch-source-compare` | 禁止在单 source watch 回调中冗余比较 next value 和 previous value。 |
 | `@sheng/no-static-px-inline-style` | 提示 Vue 组件不要把固定 px 样式写成 `:style` 绑定对象。 |
+
+### `vue-reactivity`
+
+| 规则 | 作用 |
+| --- | --- |
+| `@sheng/no-redundant-watch-source-compare` | 禁止在单 source watch 回调中冗余比较 next value 和 previous value。 |
+| `@sheng/prefer-to-refs-props` | 提醒组件脚本里不要直接读取 `props.xxx` 或 `toRef(props, key)`，统一先 `toRefs(props)`。 |
+
+### `type-readability`
+
+| 规则 | 作用 |
+| --- | --- |
 | `@sheng/no-type-import-used-as-value` | 提示 type-only import 不能在运行时表达式里当值使用。 |
+| `@sheng/no-redundant-indexed-record-satisfies` | 提示完整 `Record` 映射表被立即索引时去掉冗余 `satisfies`。 |
+| `@sheng/prefer-keyed-object-map` | 提醒同一个离散 key 的分支优先改成对象字面量加 key 映射。 |
 | `@sheng/prefer-inline-single-use-map` | 提示只被索引读取一次的对象 / 数组映射表直接内联到使用处。 |
 | `@sheng/prefer-inline-trivial-computed` | 提示不要用 `computed` 只包一层静态 i18n 调用或简单模板 class map。 |
-| `@sheng/prefer-keyed-object-map` | 提醒同一个离散 key 的分支优先改成对象字面量加 key 映射。 |
-| `@sheng/prefer-to-refs-props` | 提醒组件脚本里不要直接读取 `props.xxx` 或 `toRef(props, key)`，统一先 `toRefs(props)`。 |
 
 ### `load-more-trigger`
 
-| Rule | 作用 |
+| 规则 | 作用 |
 | --- | --- |
 | `@sheng/prefer-load-more-trigger` | 提示疑似无限滚动场景不要手写 `IntersectionObserver`，优先使用 `useLoadMoreTrigger`。 |
 
@@ -223,10 +252,11 @@ export default [
 这套规则不要求一次全部打开。更稳的做法是按问题域接入：
 
 1. Vue / Nuxt 项目先接 `vue-script-setup` 和 `nuxt-auto-import`，它们通常能比较快暴露真实问题。
-2. 有国际化和用户输入展示的项目再接 `project-style` 里的 i18n、中文文案和 Unicode 相关规则。
-3. composable 已经成为项目结构约定后，再接 `composable-boundary`，避免规则先于目录边界落地。
-4. 对历史代码量比较大的项目，先保持 `warn`，用 CI artifact 或本地 lint 输出观察命中情况。
-5. 每条规则确认适合当前团队后，再在项目配置里覆盖成 `error`。
+2. 有国际化的项目接 `i18n`；只处理单语言产品时可以先跳过这一组。
+3. 有用户输入展示和截断需求的项目接 `unicode-user-text`。
+4. composable 已经成为项目结构约定后，再接 `composable-boundary`，避免规则先于目录边界落地。
+5. 对历史代码量比较大的项目，先保持 `warn`，用 CI artifact 或本地 lint 输出观察命中情况。
+6. 每条规则确认适合当前团队后，再在项目配置里覆盖成 `error`。
 
 示例：
 
@@ -234,7 +264,8 @@ export default [
 import sheng from '@sheng/eslint-plugin'
 
 export default [
-  sheng.configs['project-style'],
+  sheng.configs.i18n,
+  sheng.configs['component-resource-style'],
   {
     rules: {
       '@sheng/no-dynamic-i18n-t-key': 'error',
@@ -266,15 +297,17 @@ src/
   index.js              # plugin 入口，导出 meta / rules / configs / processors
   configs.js            # 生成 warn 级别 flat config
   rules/
-    index.js            # rule 注册表和 config 分组
+    index.js            # rule 注册表
+    groups.js           # config 分组和文档侧分组展示信息
     <rule-name>/        # 单条 rule 实现和源码旁短 README
     utils/              # 多条 rule 共享的 helper
 docs/
-  index.md              # 未来文档站首页
+  index.md              # 文档站首页
   guide.md              # 安装、配置和复制源码说明
   configs.md            # config 分组说明
   rules/
     index.md            # 规则列表
+    groups/             # 分组说明页，侧边栏一级分组会链接到这里
     <rule-name>.md      # 单条 rule 完整文档
 tests/
   unit/architecture/    # 从文章源码包迁移过来的 RuleTester 用例
@@ -293,7 +326,7 @@ scripts/
 1. 在 `src/rules/<rule-name>/` 修改规则实现；源码旁 README 只保留短入口。
 2. 在 `tests/unit/architecture/` 增加或调整 RuleTester 用例。
 3. 在 `docs/rules/<rule-name>.md` 修改完整规则文档。
-4. 必要时更新 `src/rules/index.js` 里的 `rules` 和 `ruleGroups`。
+4. 必要时更新 `src/rules/index.js` 里的 `rules` 和 `src/rules/groups.js` 里的 `ruleGroups`。
 5. 运行 `pnpm test`，其中会同时跑 RuleTester 和 `docs:check`。
 6. 运行 `pnpm run files:index` 更新 `FILES.json`。
 7. 运行 `pnpm run sync:blog` 把规则源码、测试、文档和示例同步回博客源码包。

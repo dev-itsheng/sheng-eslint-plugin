@@ -6,7 +6,7 @@ config: "vue-script-setup"
 
 # @sheng/no-nested-define-props
 
-避免把 Vue <script setup> 的 defineProps() 包进普通运行时表达式，导致编译器宏没有被识别。
+避免把 Vue `<script setup>` 的 defineProps() 包进普通运行时表达式，导致编译器宏没有被识别。
 
 ## 所属 config
 
@@ -59,6 +59,14 @@ const { level } = defineProps<Props>()
 - 允许 `defineProps()` 作为顶层变量初始化入口、顶层表达式入口，以及 `withDefaults()` 的第一个参数。
 - 提示 `toRefs(defineProps(...))`、`toRef(defineProps(...), key)`、`readonly(defineProps(...))`、自定义函数包裹和条件表达式包裹。
 - 默认不 autofix。大多数场景推荐拆成两步，但局部代码可能更适合 Vue 3.5 的直接解构，规则不替项目自动选择。
+
+## 相关阅读
+
+这条规则对应中文文章 [Vue script setup 中 defineProps 的编译边界与错误排查](https://shengsheng.fun/2026/05/23/vue-defineprops-macro-wrapper/)。文章里的核心结论是：Vue 编译器只识别顶层宏入口上的 `defineProps()`；一旦它被 `toRefs()`、自定义函数或条件表达式包起来，就会变成普通运行时调用。规则用 AST 检查复刻这条边界，把“宏没有被编译掉”的问题提前到编辑器里。
+
+## 在线试一下
+
+<RuleDemo rule="no-nested-define-props" />
 
 ## 接入方式
 

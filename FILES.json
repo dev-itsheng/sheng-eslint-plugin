@@ -30,6 +30,61 @@
     "label": "index"
   },
   {
+    "path": "docs/rules/groups/component-resource-style.md",
+    "group": "docs/rules",
+    "label": "component-resource-style"
+  },
+  {
+    "path": "docs/rules/groups/composable-boundary.md",
+    "group": "docs/rules",
+    "label": "composable-boundary"
+  },
+  {
+    "path": "docs/rules/groups/enum-public-api.md",
+    "group": "docs/rules",
+    "label": "enum-public-api"
+  },
+  {
+    "path": "docs/rules/groups/i18n.md",
+    "group": "docs/rules",
+    "label": "i18n"
+  },
+  {
+    "path": "docs/rules/groups/load-more-trigger.md",
+    "group": "docs/rules",
+    "label": "load-more-trigger"
+  },
+  {
+    "path": "docs/rules/groups/nuxt-auto-import.md",
+    "group": "docs/rules",
+    "label": "nuxt-auto-import"
+  },
+  {
+    "path": "docs/rules/groups/nuxt-ssr-state.md",
+    "group": "docs/rules",
+    "label": "nuxt-ssr-state"
+  },
+  {
+    "path": "docs/rules/groups/type-readability.md",
+    "group": "docs/rules",
+    "label": "type-readability"
+  },
+  {
+    "path": "docs/rules/groups/unicode-user-text.md",
+    "group": "docs/rules",
+    "label": "unicode-user-text"
+  },
+  {
+    "path": "docs/rules/groups/vue-reactivity.md",
+    "group": "docs/rules",
+    "label": "vue-reactivity"
+  },
+  {
+    "path": "docs/rules/groups/vue-script-setup.md",
+    "group": "docs/rules",
+    "label": "vue-script-setup"
+  },
+  {
     "path": "docs/rules/index.md",
     "group": "docs/rules",
     "label": "index"
@@ -178,6 +233,11 @@
     "path": "src/index.js",
     "group": "plugin",
     "label": "src"
+  },
+  {
+    "path": "src/rules/groups.js",
+    "group": "rules",
+    "label": "groups"
   },
   {
     "path": "src/rules/index.js",

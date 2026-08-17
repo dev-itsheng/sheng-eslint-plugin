@@ -35,6 +35,21 @@ JavaScript 的 `String.length` 统计的是 UTF-16 code unit，不是用户眼�
 
 规则不是“所有字符串都不能用原生 API”。它会结合变量名、函数名、调用链、TypeScript 类型和 Vue ref 类型判断目标是不是用户可见文本。
 
+## 会提示
+
+```ts
+const nickname = ref('👨‍👩‍👧‍👦')
+
+const count = nickname.value.length
+const preview = nickname.value.slice(0, 10)
+```
+
+```vue
+<template>
+  <input v-model="nickname" maxlength="20" />
+</template>
+```
+
 ## 推荐替代
 
 统一使用 `shared/utils/unicodeText/` 里的工具：
@@ -49,10 +64,17 @@ JavaScript 的 `String.length` 统计的是 UTF-16 code unit，不是用户眼�
 
 如果只是限制输入最大长度，不要依赖原生 `maxlength`：
 
-```ts
-function handleInput(value: string) {
-  model.value = truncateUnicodeCharacters(value, 20)
+```vue
+<script setup lang="ts">
+function handleInput(event: Event) {
+  const input = event.target as HTMLInputElement
+  model.value = truncateUnicodeCharacters(input.value, 20)
 }
+</script>
+
+<template>
+  <input :value="model" @input="handleInput" />
+</template>
 ```
 
 ## 技术字符串例外
@@ -105,6 +127,10 @@ if (token.length !== TOKEN_LENGTH) return false
 ## 对应测试
 
 测试文件是 `tests/unit/architecture/no-native-string-user-text-ops-rule.test.ts`。这条规则涉及 Unicode 边界，新增 case 时尽量把 emoji、国旗、组合字符和技术字符串例外都覆盖到。
+
+## 相关阅读
+
+这条规则对应中文文章 [别再用 length 统计用户文本：一次 Unicode 字符数和 ESLint 护栏复盘](https://shengsheng.fun/2026/07/03/unicode-grapheme-text-count-eslint-guardrail/)。文章里的核心结论是：产品里的“一个字”更接近 Unicode grapheme cluster；JavaScript 原生字符串 API 统计的是 UTF-16 code unit，容易数错 emoji、国旗、组合字符，也可能把一个用户感知字符切断。
 
 ## 接入方式
 

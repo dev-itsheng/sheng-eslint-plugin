@@ -25,52 +25,7 @@ import preferInlineTrivialComputed from './prefer-inline-trivial-computed/index.
 import preferKeyedObjectMap from './prefer-keyed-object-map/index.mjs'
 import preferToRefsProps from './prefer-to-refs-props/index.mjs'
 import preferLoadMoreTrigger from './prefer-load-more-trigger/index.mjs'
-
-export const ruleGroups = {
-  'vue-script-setup': [
-    'no-nested-define-props',
-    'no-component-name-conflict',
-  ],
-  'unicode-user-text': [
-    'no-native-string-user-text-ops',
-  ],
-  'nuxt-auto-import': [
-    'no-explicit-vue-api-import',
-    'no-explicit-vue-component-import',
-  ],
-  'enum-public-api': [
-    'no-enum-prop-type',
-    'no-template-enum-member-alias',
-  ],
-  'nuxt-client-only-source': [
-    'no-ssr-unsafe-module-state',
-  ],
-  'composable-boundary': [
-    'no-extra-composable-exports',
-    'no-flat-private-child-module',
-    'no-global-composable-import-ui-layer',
-    'no-global-composable-pass-through',
-    'no-nested-vue-context-composable',
-  ],
-  'project-style': [
-    'no-chinese-user-text-literal',
-    'no-dom-query-in-component',
-    'no-dynamic-i18n-t-key',
-    'no-i18n-t-fallback',
-    'no-missing-static-asset-import',
-    'no-redundant-indexed-record-satisfies',
-    'no-redundant-watch-source-compare',
-    'no-static-px-inline-style',
-    'no-type-import-used-as-value',
-    'prefer-inline-single-use-map',
-    'prefer-inline-trivial-computed',
-    'prefer-keyed-object-map',
-    'prefer-to-refs-props',
-  ],
-  'load-more-trigger': [
-    'prefer-load-more-trigger',
-  ],
-}
+export { ruleGroups } from './groups.js'
 
 export const rules = {
   'no-nested-define-props': noNestedDefineProps,

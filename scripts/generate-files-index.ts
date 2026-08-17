@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const includedRoots = ['src', 'docs', 'README.md', 'AGENT_PROMPT.md', 'LICENSE']
-const ignoredNames = new Set(['node_modules', '.git', 'coverage', 'dist'])
+const ignoredNames = new Set(['node_modules', '.git', '.vitepress', 'coverage', 'dist'])
 
 interface FileIndexEntry {
   path: string

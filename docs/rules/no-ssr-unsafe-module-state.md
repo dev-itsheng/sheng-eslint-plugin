@@ -1,7 +1,7 @@
 ---
 ruleId: "@sheng/no-ssr-unsafe-module-state"
 ruleName: "no-ssr-unsafe-module-state"
-config: "nuxt-client-only-source"
+config: "nuxt-ssr-state"
 ---
 
 # @sheng/no-ssr-unsafe-module-state
@@ -10,17 +10,55 @@ config: "nuxt-client-only-source"
 
 ## 所属 config
 
-- `nuxt-client-only-source`：Nuxt 模块级 SSR 不安全状态边界。
+- `nuxt-ssr-state`：Nuxt 模块级 SSR 不安全状态边界。
 
 ## 为什么需要
 
-提醒 Nuxt use* composable 里的模块级可变状态必须显式声明 SSR 策略。
+Nuxt 服务端渲染下，模块级可变状态可能在请求之间共享。业务数据、页面局部状态和跨组件 DOM 桥接应该有不同 owner；如果确实需要模块级 source，就要让目录或文件名显式表达 client-only 边界。
 
-这条规则来自项目里的固定工程约定。接入前先用 `warn` 观察命中结果，再决定是否提升到 `error`。
+## 会提示
+
+```ts
+const tabBarIsSticky = ref(false)
+const scrollRootElement = shallowRef<HTMLElement | null>(null)
+
+export default function useProfileStickyState() {
+  return {
+    scrollRootElement,
+    tabBarIsSticky,
+  }
+}
+```
+
+## 推荐写法
+
+可序列化业务数据优先放到 Pinia、`useState` 或请求缓存。页面局部状态放在组件 setup 内创建：
+
+```ts
+export default function useProfileStickyState() {
+  const tabBarIsSticky = ref(false)
+  const scrollRootElement = shallowRef<HTMLElement | null>(null)
+
+  return {
+    scrollRootElement,
+    tabBarIsSticky,
+  }
+}
+```
+
+跨组件 DOM 桥接如果确实需要模块级 source，需要放进项目约定的 client-only 边界，并让 SSR 返回 no-op。
 
 ## 适用边界
 
-优先在已经采用 `nuxt-client-only-source` 约定的项目里开启。历史代码较多时，先按目录或文件范围试跑，确认误报成本可以接受。
+优先在已经采用 `nuxt-ssr-state` 约定的项目里开启。历史代码较多时，先按目录或文件范围试跑，确认误报成本可以接受。
+
+## 相关阅读
+
+这条规则对应中文文章 [别等 review 才想起 SSR：给 Nuxt 模块级 composable 补上静态护栏](https://shengsheng.fun/2026/07/16/nuxt-composable-ssr-guardrail/)。文章里的核心口径是：模块级状态先按可序列化业务数据、页面局部状态、跨组件 DOM 桥接分类，再分别选择 Pinia / `useState`、组件 setup 或显式 client-only source。
+
+## 在线试一下
+
+<RuleDemo rule="no-ssr-unsafe-module-state" />
 
 ## 接入方式
 

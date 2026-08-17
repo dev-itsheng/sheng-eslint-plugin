@@ -1,0 +1,16 @@
+.rule-demo {
+  border-radius: 6px;
+  padding: 1.25rem 0;
+  margin: 1em 0;
+  background-color: #1e1e1e;
+}
+
+.rule-demo__editor {
+  width: 100%;
+}
+
+.rule-demo__load-error {
+  margin: 0;
+  padding: 14px;
+  color: var(--vp-c-text-2);
+}

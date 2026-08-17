@@ -32,6 +32,14 @@ const count = ref(0)
 const doubled = computed(() => count.value * 2)
 ```
 
+## 相关阅读
+
+这条规则对应中文文章 [Nuxt 自动导入不该靠自觉：一次组件和 Vue API import 的 ESLint 护栏](https://shengsheng.fun/2026/07/09/nuxt-auto-import-eslint-guardrail/)。文章里的核心判断是：这条规则只拦 Nuxt 已自动导入的 Vue 运行时 API value import，`import type` 和未列入名单的 API 不应该被一刀切掉。
+
+## 在线试一下
+
+<RuleDemo rule="no-explicit-vue-api-import" />
+
 ## 接入方式
 
 `@sheng/eslint-plugin` 的内置 config 会以 `warn` 开启这条规则。需要单独配置时，可以这样写：

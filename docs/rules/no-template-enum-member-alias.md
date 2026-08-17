@@ -44,6 +44,10 @@ const enum DialogMode {
 </template>
 ```
 
+## 相关阅读
+
+这条规则对应中文文章 [用 const enum 和字符串值类型保留公开 API 的自然写法](https://shengsheng.fun/2026/07/14/const-enum-string-value-type/)。文章里的核心结论是：Vue template 可以直接访问 `<script setup>` 里的 enum member，一比一中转常量只增加命名和跳转成本。真正承担语义转换、展示文案或运行时遍历的映射对象仍然应该保留。
+
 ## 接入方式
 
 `@sheng/eslint-plugin` 的内置 config 会以 `warn` 开启这条规则。需要单独配置时，可以这样写：

@@ -4,4 +4,4 @@
 
 完整规则文档见 `../../../docs/rules/no-redundant-watch-source-compare.md`。
 
-内置 config：`project-style`。
+内置 config：`vue-reactivity`。
