@@ -18,4 +18,4 @@
 
 ## 相关阅读
 
-- [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/) 里讨论了这组规则的共同点：它们不是统一审美，而是把 DOM owner、静态样式和资源路径这类容易晚暴露的问题提前到 lint 阶段。
+- [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/) 说明了为什么要把反复出现的项目约定沉淀成 ESLint 护栏；本组具体规则内容以当前文档站为准。

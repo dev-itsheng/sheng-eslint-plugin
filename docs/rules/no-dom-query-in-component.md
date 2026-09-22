@@ -68,7 +68,7 @@ const dialog = document.getElementById('dialog')
 
 ## 相关阅读
 
-这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：组件里的 DOM owner 应该尽量留在模板结构里，单节点用 template ref，列表节点用 function ref，子组件内部节点通过 emit 或公开方法交给父层。
+这条规则的方法论背景见中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。具体触发条件、示例、配置和维护入口以本页为准。
 
 ## 在线试一下
 

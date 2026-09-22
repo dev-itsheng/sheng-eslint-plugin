@@ -42,7 +42,7 @@ const isGuest = authMode.value === AuthMode.Guest
 
 ## 相关阅读
 
-这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：`import type` 引入的符号只存在于类型空间，拿它访问 enum member、静态成员或运行时属性已经触及运行时错误风险；ESLint 可以比构建更早在编辑器里打标。
+这条规则的方法论背景见中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。具体触发条件、示例、配置和维护入口以本页为准。
 
 ## 在线试一下
 

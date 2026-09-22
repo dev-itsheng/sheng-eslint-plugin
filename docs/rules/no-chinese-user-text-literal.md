@@ -69,7 +69,7 @@ const titleText = computed(() => t('profile_edit_title', { name: profileName.val
 
 ## 相关阅读
 
-这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：裸中文文案不一定立刻就是错误，但它必须进入可追踪清单；规则扫描运行时字符串、模板静态片段、Vue template 文本和静态属性，不扫描注释。
+这条规则的方法论背景见中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。具体触发条件、示例、配置和维护入口以本页为准。
 
 ## 在线试一下
 

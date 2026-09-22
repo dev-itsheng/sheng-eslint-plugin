@@ -27,13 +27,6 @@ export default defineConfig({
   vite: {
     build: {
       chunkSizeWarningLimit: 3500,
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes('monaco-editor')) return 'monaco-editor'
-          },
-        },
-      },
     },
   },
   themeConfig: {

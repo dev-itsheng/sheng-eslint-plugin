@@ -63,7 +63,7 @@ const buttonStyle = {
 
 ## 相关阅读
 
-这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：固定尺寸长期放在 JS style object 里，会把静态视觉约束藏进脚本层；固定值应该回到 class、BEM、scoped style 或 Tailwind `@apply`，脚本里的 `:style` 只保留真实动态值。
+这条规则的方法论背景见中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。具体触发条件、示例、配置和维护入口以本页为准。
 
 ## 在线试一下
 

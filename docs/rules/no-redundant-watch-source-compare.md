@@ -86,7 +86,7 @@ if (next === previous || loading.value) return
 
 ## 相关阅读
 
-这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：单 source `watch` 已经在值变化后触发，回调开头再写 `next === previous` 早退通常只是防御式噪音；真正应该保留的是 tab、请求状态、cursor 这类业务条件。
+这条规则的方法论背景见中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。具体触发条件、示例、配置和维护入口以本页为准。
 
 ## 在线试一下
 

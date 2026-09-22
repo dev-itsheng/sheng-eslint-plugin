@@ -45,7 +45,7 @@ const rootClasses = computed(() => ({
 
 ## 相关阅读
 
-这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：`computed()` 只包一层静态 i18n 调用或简单 class map 时，容易制造「这里有状态派生」的错觉；静态文案和轻量模板 class 通常放回模板更直接。
+这条规则的方法论背景见中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。具体触发条件、示例、配置和维护入口以本页为准。
 
 ## 在线试一下
 

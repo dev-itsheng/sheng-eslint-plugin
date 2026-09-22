@@ -17,4 +17,4 @@
 
 ## 相关阅读
 
-- [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/) 里把这两条规则作为响应式代码可读性的例子：watch 里少写无意义防御，props 读取形态保持一致。
+- [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/) 说明了为什么要把反复出现的项目约定沉淀成 ESLint 护栏；本组具体规则内容以当前文档站为准。

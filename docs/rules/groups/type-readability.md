@@ -20,4 +20,4 @@
 
 ## 相关阅读
 
-- [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/) 里把这组规则定位成“减少维护噪音”：明确运行时错误风险，收敛离散状态映射，去掉没有复用语义的中间命名。
+- [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/) 说明了为什么要把反复出现的项目约定沉淀成 ESLint 护栏；本组具体规则内容以当前文档站为准。

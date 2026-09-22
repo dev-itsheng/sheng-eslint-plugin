@@ -1,6 +1,6 @@
 # @sheng/no-component-name-conflict
 
-避免 Vue <script setup> 中组件 tag 或自定义指令名和顶层绑定只靠大小写区分，导致模板解析到错误对象。
+避免 Vue `<script setup>` 中组件 tag 或自定义指令名和顶层绑定只靠大小写区分，导致模板解析到错误对象。
 
 完整规则文档见 `../../../docs/rules/no-component-name-conflict.md`。
 

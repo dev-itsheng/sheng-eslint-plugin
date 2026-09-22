@@ -42,7 +42,7 @@ console.log(name.value)
 
 ## 相关阅读
 
-这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：项目约定先 `toRefs(props)` 时，同一类组件里继续混用 `props.xxx`、`toRef(props, key)` 和 Ref 参数会增加阅读成本；这条规则是团队风格护栏，不是 Vue 官方唯一写法。
+这条规则的方法论背景见中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。具体触发条件、示例、配置和维护入口以本页为准。
 
 ## 在线试一下
 

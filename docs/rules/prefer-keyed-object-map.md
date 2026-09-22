@@ -77,7 +77,7 @@ function getText(status: Status) {
 
 ## 相关阅读
 
-这条规则对应中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。文章里的核心结论是：多分支都在比较同一个离散 key 时，对象映射通常比连续三元、`if` 链或 `switch` 更容易扫读；但 value 里有副作用或昂贵计算时，应该改成函数映射或保留分支。
+这条规则的方法论背景见中文文章 [Skill 管不住代码风格时：把项目约定写成 ESLint 护栏](https://shengsheng.fun/2026/07/24/agent-code-style-eslint-guardrails/)。具体触发条件、示例、配置和维护入口以本页为准。
 
 ## 在线试一下
 
